@@ -1,1 +1,6 @@
---- {}
+---
+.blobs/bosh/bosh-5.4.0-linux-amd64:
+  url: https://github.com/cloudfoundry/bosh-cli/releases/download/v5.4.0/bosh-cli-5.4.0-linux-amd64
+  hash:
+    type: sha256
+    value: ecc1b6464adf9a0ede464b8699525a473e05e7205357e4eb198599edf1064f57

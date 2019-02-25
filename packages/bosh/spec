@@ -1,0 +1,7 @@
+---
+name: bosh
+
+dependencies: []
+
+files:
+- bosh/bosh-*-linux-amd64
