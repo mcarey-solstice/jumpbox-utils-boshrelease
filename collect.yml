@@ -4,3 +4,8 @@
   hash:
     type: sha256
     value: ecc1b6464adf9a0ede464b8699525a473e05e7205357e4eb198599edf1064f57
+.blobs/jq/jq-1.6-linux-amd64:
+  url: https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+  hash:
+    type: sha256
+    value: af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44
