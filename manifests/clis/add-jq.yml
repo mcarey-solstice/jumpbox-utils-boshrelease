@@ -1,0 +1,10 @@
+---
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=jq?/release
+  value: jumpbox-utils
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties/clis?/-
+  value:
+    script: /var/vcap/packages/jq/bin/jq
+    version_option: --version
