@@ -1,0 +1,19 @@
+---
+name: set-path
+
+templates:
+  pre-start.erb: bin/pre-start
+
+packages: []
+
+properties:
+  jumpbox.clis:
+    description: "The clis to add to the path"
+    default: []
+    example: |-
+      - script: /var/vcap/packages/my-cli/bin/my-cli
+        version_option:
+
+  jumpbox.profile_script:
+    description: "The name of the profile script to set the path in"
+    defaut: 99_set-path.sh
