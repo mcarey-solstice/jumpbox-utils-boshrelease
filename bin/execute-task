@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"/fly-login
+
+function execute-task() {
+
+  local task=$1
+  shift
+
+  if [[ -z $task ]]; then
+    {
+      echo "Usage:   $0 task [...extra_options]"
+      echo "  task           :  The name of the task to execute"
+      echo "  extra_options  :  Extra options to be appended to the command"
+    } >&2
+    return 1
+  fi
+
+  local options="${@:-}"
+
+  fly-login
+
+  fly -t ${FLY_TARGET} execute \
+    -c ci/tasks/${task}.yml \
+    -i .blobs=blobs \
+    -i release=. \
+    $options
+}
+
+if [[ ${BASH_SOURCE[0]} != $0 ]]; then
+  export -f execute-task
+else
+  set -euo pipefail
+
+  execute-task "${@:-}"
+  exit $?
+fi

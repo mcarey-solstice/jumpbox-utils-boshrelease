@@ -4,4 +4,14 @@
 
 export MAKE_CACHE=false
 
+# Fly options
+export FLY_TARGET=
+export FLY_USERNAME=
+export FLY_PASSWORD=
+export FLY_TEAM=
+export FLY_SKIP_SSL_VALIDATION=false
+export FLY_CA_CERT=
+export FLY_CA_CERT_FILE=
+export FLY_PIPELINE=jumpbox-utils
+
 # vi:syntax=sh

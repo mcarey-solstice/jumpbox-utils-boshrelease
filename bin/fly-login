@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+function fly-login() {
+  local target=${FLY_TARGET}
+
+  local auth_options=''
+  if [[ -n "${FLY_USERNAME:-}" ]]; then
+    auth_options="-u ${FLY_USERNAME}"
+    if [[ -n "${FLY_PASSWORD:-}" ]]; then
+      auth_options+=" -p ${FLY_PASSWORD}"
+    fi
+  fi
+
+  if [[ -n "${FLY_TEAM:-}" ]]; then
+    auth_options+=" -n ${FLY_TEAM}"
+  fi
+
+  local ssl_options=''
+  if [[ -n "${FLY_CA_CERT:-}" ]]; then
+    FLY_CA_CERT_FILE=$(mktemp)
+    trap "rm -f $FLY_CA_CERT_FILE" EXIT
+  fi
+
+  if [[ -n "${FLY_CA_CERT_FILE:-}" ]]; then
+    ssl_options="--ca-cert ${FLY_CA_CERT_FILE:-}"
+  elif [[ "${FLY_SKIP_SSL_VALIDATION}" == "true" ]]; then
+    ssl_options='-k'
+  fi
+
+  fly -t ${target} login \
+    -c $target \
+    $auth_options \
+    $ssl_options
+
+  fly -t ${target} sync
+}
+
+if [[ ${BASH_SOURCE[0]} != $0 ]]; then
+  export -f fly-login
+else
+  set -euo pipefail
+
+  fly-login "${@:-}"
+  exit $?
+fi

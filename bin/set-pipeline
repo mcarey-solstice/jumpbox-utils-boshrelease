@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"/fly-login
+
+function set-pipeline() {
+  fly-login
+
+  local pipeline_name=${FLY_PIPELINE:-jumpbox-utils}
+
+  if [[ -f ci/params.yml ]]; then
+    params_options="-l ci/.params.yml"
+  fi
+
+  fly -t ${FLY_TARGET} set-pipeline \
+    -p ci/pipeline.yml \
+    $params_options
+}
+
+if [[ ${BASH_SOURCE[0]} != $0 ]]; then
+  export -f set-pipeline
+else
+  set -euo pipefail
+
+  set-pipeline "${@:-}"
+  exit $?
+fi

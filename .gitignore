@@ -2,6 +2,12 @@
 # General Ignore
 ##
 
+# Jumpbox storage
+.jumpbox/
+
+# Fly storage
+.fly/
+
 .blobs
 blobs
 
