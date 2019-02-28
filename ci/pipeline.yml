@@ -1,0 +1,99 @@
+---
+groups: []
+resource_types: []
+
+resources:
+- name: release
+  type: git
+  source:
+    repository: https://github.com/mcarey-solstice/jumpbox-utils.git
+    branch: master
+
+- name: jumpbox-deployment
+  type: git
+  source:
+    repository: https://github.com/cloudfoundry/jumpbox-deployment.git
+    branch: master
+
+- name: bosh-cli-release
+  type: github-release
+  source:
+    owner: cloudfoundry
+    repository: bosh-cli
+    access_token: ((github_access_token))
+
+- name: jq-cli-release
+  type: github-release
+  source:
+    owner: stedolan
+    repository: jq
+    access_token: ((github_access_token))
+
+jobs:
+- name: dev-release
+  plan:
+  - aggregate:
+    - get: release
+    - get: bosh
+      params:
+        version: v5.4.0
+        globs:
+        - 'bosh-cli-5.4.0-linux-amd64'
+    - get: jq
+      params:
+        version: jq-1.6
+        globs:
+        - 'jq-linux64'
+
+  # ===> TODO: Make this more dynamic
+  - task: add-blobs
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: alpine
+          tag: latest
+      inputs:
+      - name: bosh-cli-release
+      - name: jq-cli-release
+      outputs:
+      - name: blobs
+      params:
+        BLOBS: |-
+          bosh-cli-release/bosh-cli-5.4.0-linux-amd64 bosh/bosh-5.4.0-linux-amd64
+          jq-cli-release/jq-linux64 jq/jq-1.6-linux-amd64
+      run:
+        path: bash
+        args:
+        - -c
+        - |
+          set -euo pipefail
+          while read file blob; do
+            mkdir -p $(dirname blobs/$blob)
+            cp $file blobs/$blob
+          done
+  # <===
+
+  - task: build-dev-release
+    file: release/ci/tasks/build-dev-release.yml
+
+  # - task: deploy-bosh-lite
+  #   file: release/ci/tasks/deploy-bosh-lite.yml
+
+  # - task: test-dev-release
+  #   file: release/ci/tasks/test-dev-release.yml
+
+- name: final-release
+  plan:
+  - aggregate:
+    - get: release
+
+  - task: build-release
+
+  - task: tag-it
+
+  - aggregate:
+    - put: release
+
+    - task: upload-release

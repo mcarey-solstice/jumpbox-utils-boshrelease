@@ -1,0 +1,7 @@
+###
+# Copy this file as .params.yml to fly!
+##
+
+github_access_token:
+
+# fly -t ${FLY_TARGET:-main} set-pipeline -p ${FLY_PIPELINE:-jumpbox-utils} -c pipeline.yml -l .params.yml
