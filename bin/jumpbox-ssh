@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+function jumpbox-ssh() {
+  local storage=.jumpbox
+
+  local creds=$storage/creds.yml
+  local ssh_key=$storage/jumpbox.key
+
+  bosh int $creds --path /jumpbox_ssh/private_key > $ssh_key
+  chmod 600 $ssh_key
+
+  ssh jumpbox@$JUMPBOX_IP \
+    -i $ssh_key \
+    -o StrictHostKeyChecking=no \
+    -o UserKnownHostsFile=/dev/null
+}
+
+if [[ ${BASH_SOURCE[0]} != $0 ]]; then
+  export -f jumpbox-ssh
+else
+  set -euo pipefail
+
+  jumpbox-ssh "${@:-}"
+  exit $?
+fi

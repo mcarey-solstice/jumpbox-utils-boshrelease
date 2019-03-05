@@ -1,0 +1,11 @@
+---
+- type: replace
+  path: /releases/-
+  value:
+    name: jumpbox-utils
+    version: latest
+    url: file://((pwd))/.dev_builds/release.tgz
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path?/release
+  value: jumpbox-utils

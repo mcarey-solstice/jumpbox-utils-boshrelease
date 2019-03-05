@@ -1,10 +1,13 @@
 ---
 - type: replace
-  path: /instance_groups/name=jumpbox/jobs/name=bosh?/release
-  value: jumpbox-utils
+  path: /instance_groups/name=jumpbox/jobs/name=bosh?
+  value:
+    name: bosh
+    release: jumpbox-utils
+    properties: {}
 
 - type: replace
-  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties/clis?/-
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
   value:
     script: /var/vcap/packages/bosh/bin/bosh
     version_option: --version

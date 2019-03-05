@@ -6,32 +6,63 @@ function bosh-env() {
   local creds=$storage/creds.yml
   local state=$storage/state.json
 
+  local release_ops_file=add-release.yml
+
+  local -a args=()
+  while [[ -n "${1:-}" ]]; do
+    case "${1:-}" in
+      --dev )
+        release_ops_file=add-local-dev-release.yml
+        ;;
+      --final )
+        release_ops_file=add-local-final-release.yml
+        ;;
+      * )
+        args+=("$1")
+        ;;
+    esac
+    shift
+  done
+
+  set -- ${args[@]}
+
   local action=$1
   local action_options=''
 
   case $action in
     create )
+      action=create-env
       action_options="--state $state --vars-store $creds"
       ;;
     delete )
+      action=delete-env
       action_options="--state $state --vars-store $creds"
       ;;
     int | interpolate )
+      action=int
       ;;
   esac
 
   local jumpbox=vendor/jumpbox-deployment
   local manifest=$jumpbox/jumpbox.yml
 
+  local clis=''
+  for i in manifests/clis/*.yml; do
+    clis+=" -o $i"
+  done
+
   bosh $action \
     $manifest \
     $action_options \
     -o manifests/jumpbox/virtualbox-cpi.yml \
-    -v external_ip=192.168.50.6 \
-    -v internal_ip=192.168.50.6 \
-    -v internal_gw=192.168.50.1 \
-    -v internal_cidr=192.168.50.0/24 \
-    -v outbound_network_name=NatNetwork
+    -o manifests/$release_ops_file \
+    $clis \
+    -v pwd=$PWD \
+    -v external_ip=$JUMPBOX_IP \
+    -v internal_ip=$JUMPBOX_IP \
+    -v internal_gw=$JUMPBOX_GATEWAY \
+    -v internal_cidr=$JUMPBOX_CIDR \
+    -v network_name=$JUMPBOX_NETWORK
 }
 
 if [[ ${BASH_SOURCE[0]} != $0 ]]; then

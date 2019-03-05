@@ -4,14 +4,14 @@
   value:
     name: bosh-virtualbox-cpi
     version: "41"
-    url: https://bosh.io/d/github.com/cppforlife/bosh-warden-cpi-release?v=41
-    sha1: b751ea458fc54f3e9f8af29ff7fa25bcd1f31f4c
+    url: https://bosh.io/d/github.com/cppforlife/bosh-virtualbox-cpi-release?v=0.0.13
+    sha1: 3aee2200f5d7ee20b149c7303009c3f6088ba559
 
 - type: replace
   path: /resource_pools/name=vms/stemcell?
   value:
-    url: https://bosh.io/d/stemcells/bosh-warden-boshlite-ubuntu-xenial-go_agent?v=250.9
-    sha1: d1f77ba0e65920ebf45f9c80dc0187b107b739a0
+    url: https://bosh.io/d/stemcells/bosh-vsphere-esxi-ubuntu-xenial-go_agent?v=250.9
+    sha1: ec327636a44ff3247ed87729d45d17a90a8fabb4
 
 - path: /resource_pools/name=vms/cloud_properties?
   type: replace
@@ -25,3 +25,20 @@
   value:
     name: virtualbox_cpi
     release: bosh-virtualbox-cpi
+
+- type: replace
+  path: /networks
+  value:
+  - name: private
+    type: manual
+    subnets:
+    - range: ((internal_cidr))
+      gateway: ((internal_gw))
+      static: [((internal_ip))]
+      dns: [8.8.8.8]
+      cloud_properties:
+        name: ((network_name))
+
+
+- type: remove
+  path: /instance_groups/name=jumpbox/networks/name=public

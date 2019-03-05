@@ -6,33 +6,39 @@ PKGS_DIR=/var/vcap/packages
 JOBS_DIR=/var/vcap/jobs
 LOGS_DIR=/var/vcap/sys/log/jumpbox-utils
 
-exec 1>$LOGS_DIR/pre-start.stdout.log
-exec 2>$LOGS_DIR/pre-start.stderr.log
+mkdir -p $LOGS_DIR
+
+exec 1> >(tee -a $LOGS_DIR/pre-start.stdout.log)
+exec 2> >(tee -a $LOGS_DIR/pre-start.stderr.log >&2)
 
 set -x
 
-PROFILE_SCRIPT=/etc/profile.d/<% p('jumpbox.profile_script') %>
+PROFILE_SCRIPT=/etc/profile.d/<%= p('jumpbox.profile_script') %>
 
 <%
   paths = []
   scripts = []
   if_p('jumpbox.clis') do |clis|
     clis.each do |cli|
-      path = File.dirname(cli.script)
+      path = File.dirname(cli['script'])
       if !paths.include? path
         paths << path
       end
 
-      scripts << "#{File.basename(cli.script)} #{version_option}"
+      scripts << "#{File.basename(cli['script'])} #{cli['version_option']}"
     end
   end
 %>
 
-source "Building profile script"
-echo "export PATH=\"$PATH:<%= paths.join(":") %>\"" > $PROFILE_SCRIPT
+echo "Building profile script"
+echo "export PATH=\"\$PATH:<%= paths.join(":") %>\"" > $PROFILE_SCRIPT
 
 echo "Loading profile script"
 source $PROFILE_SCRIPT
+
+# Some clis will read/write config files even if version is called
+export HOME=$(mktemp -d)
+trap "rm -rf $HOME" EXIT
 
 echo "Scripts available via path:"
 <% scripts.each do |script| %>
