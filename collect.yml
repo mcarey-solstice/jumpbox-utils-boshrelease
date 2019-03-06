@@ -19,3 +19,8 @@
   hash:
     type: sha256
     value: 3efca08d5397be4a92dd47439e948f2389a4cc6da0a83c6624d6000edfb83941
+.blobs/fly/fly-4.2.3-linux-amd64:
+  url: https://github.com/concourse/concourse/releases/download/v4.2.3/fly_linux_amd64
+  hash:
+    type: sha256
+    value: 83c947db0d9ca7987d57836392c6671dbeeb3824319cfd28ff900f19d652546e

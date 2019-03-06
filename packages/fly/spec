@@ -1,0 +1,7 @@
+---
+name: fly
+
+dependencies: []
+
+files:
+- fly/fly-*-linux-amd64

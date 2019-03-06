@@ -1,0 +1,13 @@
+---
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=fly?
+  value:
+    name: fly
+    release: jumpbox-utils
+    properties: {}
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/fly/bin/fly
+    version_option: --version
