@@ -1,0 +1,13 @@
+---
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=bbr?
+  value:
+    name: bbr
+    release: jumpbox-utils
+    properties: {}
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/bbr/bin/bbr
+    version_option: --version

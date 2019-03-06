@@ -24,3 +24,8 @@
   hash:
     type: sha256
     value: 83c947db0d9ca7987d57836392c6671dbeeb3824319cfd28ff900f19d652546e
+.blobs/bbr/bbr-1.4.0-linux-amd64:
+  url: https://github.com/cloudfoundry-incubator/bosh-backup-and-restore/releases/download/v1.4.0/bbr-1.4.0-linux-amd64
+  hash:
+    type: sha256
+    value: 82d5a4a8970119a5177772f5c1e7e7a584cc87fa14262ecfb496b20e7dcd5dac

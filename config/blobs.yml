@@ -1,3 +1,6 @@
+bbr/bbr-1.4.0-linux-amd64:
+  size: 20130146
+  sha: 44a658b186511b9df38453fdafe4078291f5d27f
 bosh/bosh-5.4.0-linux-amd64:
   size: 28531714
   sha: 58d4ed9e602e6434d235242e590121986d767459
