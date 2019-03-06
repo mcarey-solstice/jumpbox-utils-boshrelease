@@ -1,0 +1,19 @@
+---
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=cf-mgmt?
+  value:
+    name: cf-mgmt
+    release: jumpbox-utils
+    properties: {}
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/cf-mgmt/bin/cf-mgmt-config
+    version_option: version
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/cf-mgmt/bin/cf-mgmt
+    version_option: version

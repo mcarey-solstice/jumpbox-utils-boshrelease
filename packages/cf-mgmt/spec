@@ -1,0 +1,8 @@
+---
+name: cf-mgmt
+
+dependencies: []
+
+files:
+- cf-mgmt-config/cf-mgmt-config-*-linux-amd64
+- cf-mgmt/cf-mgmt-*-linux-amd64
