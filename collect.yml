@@ -34,3 +34,8 @@
   hash:
     type: sha256
     value: 19f18b7439b7cf625c7a7e2a048f3e8b0caba7a7d6a1455e2afbb48ff6f2e117
+.blobs/credhub/credhub-2.2.1-linux-amd64.tgz:
+  url: https://github.com/cloudfoundry-incubator/credhub-cli/releases/download/2.2.1/credhub-linux-2.2.1.tgz
+  hash:
+    type: sha256
+    value: 89dde418e7d8ba329ce31e71bff83047cee486da78cc37fbaecae766713b33d5

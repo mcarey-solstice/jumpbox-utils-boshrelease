@@ -1,0 +1,9 @@
+---
+name: credhub
+
+templates: {}
+
+packages:
+- credhub
+
+properties: {}
