@@ -10,6 +10,9 @@ cf-mgmt-config/cf-mgmt-config-1.0.21-linux-amd64:
 cf-mgmt/cf-mgmt-1.0.21-linux-amd64:
   size: 11680593
   sha: fc9a11e2691ebef6f01a5fcb26633e50fa27bd32
+cf/cf-6.43.0-linux-amd64.tgz:
+  size: 7391903
+  sha: 334b4cbd836361e1dd1b09dc621ebd5352a87364
 fly/fly-4.2.3-linux-amd64:
   size: 14045212
   sha: 52fe75b0885d3c28e9a76f98138a4b22db47f918

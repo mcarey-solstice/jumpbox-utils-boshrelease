@@ -1,0 +1,7 @@
+---
+name: cf
+
+dependencies: []
+
+files:
+- cf/cf-*-linux-amd64.tgz

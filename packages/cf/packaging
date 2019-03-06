@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -eux
+
+mkdir -p ${BOSH_INSTALL_TARGET}/bin
+
+tar -xzvf ${BOSH_COMPILE_TARGET}/cf/cf-*-linux-amd64.tgz -C ${BOSH_INSTALL_TARGET}/bin cf
+chmod +x ${BOSH_INSTALL_TARGET}/bin/cf

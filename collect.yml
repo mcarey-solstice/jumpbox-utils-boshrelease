@@ -29,3 +29,8 @@
   hash:
     type: sha256
     value: 82d5a4a8970119a5177772f5c1e7e7a584cc87fa14262ecfb496b20e7dcd5dac
+.blobs/cf/cf-6.43.0-linux-amd64.tgz:
+  url: https://packages.cloudfoundry.org/stable?release=linux64-binary&version=6.43.0&source=github-rel
+  hash:
+    type: sha256
+    value: 19f18b7439b7cf625c7a7e2a048f3e8b0caba7a7d6a1455e2afbb48ff6f2e117
