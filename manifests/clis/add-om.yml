@@ -1,0 +1,13 @@
+---
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=om?
+  value:
+    name: om
+    release: jumpbox-utils
+    properties: {}
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/om/bin/om
+    version_option: --version

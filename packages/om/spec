@@ -1,0 +1,7 @@
+---
+name: om
+
+dependencies: []
+
+files:
+- om/om-*-linux-amd64
