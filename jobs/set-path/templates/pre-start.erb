@@ -23,15 +23,15 @@ PROFILE_SCRIPT=/etc/profile.d/<%= p('jumpbox.profile_script') %>
   scripts = []
   if_p('jumpbox.clis') do |clis|
     clis.each do |cli|
-      path = File.dirname(cli[:script])
+      path = File.dirname(cli['script'])
       if !paths.include? path
         paths << path
       end
 
-      if cli.include? :version_option && !cli[:version_option]
-        scripts << "#{File.basename(cli[:script])} #{cli[:version_option]}"
+      if cli.include? 'version_option' && cli['version_option']
+        scripts << "#{File.basename(cli['script'])} #{cli['version_option']}"
       else
-        scripts << "echo #{File.basename(cli[:script])}"
+        scripts << "echo #{File.basename(cli['script'])}"
       end
     end
   end

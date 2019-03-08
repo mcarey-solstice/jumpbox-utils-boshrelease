@@ -44,8 +44,3 @@
   hash:
     type: sha256
     value: 2baa596cd18d24f0901700b9a344816dfd30d77890d9c5e02359d416efa4d2f4
-.blobs/docker/docker-18.09.3-linux-amd64.tgz:
-  url: https://download.docker.com/linux/static/stable/x86_64/docker-18.09.3.tgz
-  hash:
-    type: sha256
-    value: 8b886106cfc362f1043debfe178c35b6f73ec42380b034a3919a235fe331e053
