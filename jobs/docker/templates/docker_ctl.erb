@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -eu
+
+PKGS_DIR=/var/vcap/packages/docker
+JOBS_DIR=/var/vcap/jobs/docker
+LOGS_DIR=/var/vcap/sys/log/docker
+PID_FILE=/var/vcap/sys/run/docker
+
+mkdir -p $LOGS_DIR
+
+exec 1>> >(tee -a $LOGS_DIR/pre-start.stdout.log)
+exec 2>> >(tee -a $LOGS_DIR/pre-start.stderr.log >&2)
+
+date
+date >&2
+
+set -eux
+
+source $PKGS_DIR/lib/utils.sh
+
+export PATH=$PATH:${PKGS_DIR}/bin
+
+case "$1" in
+
+  start )
+    pid_guard ${PID_FILE} docker
+
+    exec dockerd \
+      1>> dockerd.stdout.log \
+      2>> dockerd.stderr.log &
+    ;;
+
+  stop )
+    kill_and_wait ${PID_FILE}
+    ;;
+
+  * )
+    echo "Usage $0 {start|stop}" >&2
+    exit 1
+    ;;
+
+esac

@@ -1,0 +1,8 @@
+---
+name: docker
+
+dependencies: []
+
+files:
+- common/*
+- docker/docker-*-linux-amd64.tgz

@@ -4,12 +4,15 @@ set -eu
 
 PKGS_DIR=/var/vcap/packages
 JOBS_DIR=/var/vcap/jobs
-LOGS_DIR=/var/vcap/sys/log/jumpbox-utils
+LOGS_DIR=/var/vcap/sys/log/set-path
 
 mkdir -p $LOGS_DIR
 
-exec 1> >(tee -a $LOGS_DIR/pre-start.stdout.log)
-exec 2> >(tee -a $LOGS_DIR/pre-start.stderr.log >&2)
+exec 1>> >(tee -a $LOGS_DIR/pre-start.stdout.log)
+exec 2>> >(tee -a $LOGS_DIR/pre-start.stderr.log >&2)
+
+date
+date >&2
 
 set -x
 
@@ -20,12 +23,16 @@ PROFILE_SCRIPT=/etc/profile.d/<%= p('jumpbox.profile_script') %>
   scripts = []
   if_p('jumpbox.clis') do |clis|
     clis.each do |cli|
-      path = File.dirname(cli['script'])
+      path = File.dirname(cli[:script])
       if !paths.include? path
         paths << path
       end
 
-      scripts << "#{File.basename(cli['script'])} #{cli['version_option']}"
+      if cli.include? :version_option && !cli[:version_option]
+        scripts << "#{File.basename(cli[:script])} #{cli[:version_option]}"
+      else
+        scripts << "echo #{File.basename(cli[:script])}"
+      end
     end
   end
 %>

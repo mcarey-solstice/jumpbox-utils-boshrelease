@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -eux
+
+tar -xzvf ${BOSH_COMPILE_TARGET}/docker/docker-*-linux-amd64.tgz -C ${BOSH_INSTALL_TARGET}
+mv ${BOSH_INSTALL_TARGET}/docker ${BOSH_INSTALL_TARGET}/bin
+chmod +x ${BOSH_INSTALL_TARGET}/bin/*
+
+mkdir -p ${BOSH_INSTALL_TARGET}/lib
+cp common/* ${BOSH_INSTALL_TARGET}/lib

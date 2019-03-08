@@ -16,6 +16,9 @@ cf/cf-6.43.0-linux-amd64.tgz:
 credhub/credhub-2.2.1-linux-amd64.tgz:
   size: 5168251
   sha: 8423ebfd3c4375f733a53178591d8ddc3b1d4ddb
+docker/docker-18.09.3-linux-amd64.tgz:
+  size: 48032616
+  sha: a5e1b5900f02257ba70482bc2c18c6ae0db1b17c
 fly/fly-4.2.3-linux-amd64:
   size: 14045212
   sha: 52fe75b0885d3c28e9a76f98138a4b22db47f918

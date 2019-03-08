@@ -1,0 +1,48 @@
+---
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=docker?
+  value:
+    name: docker
+    release: jumpbox-utils
+    properties: {}
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/docker/bin/containerd
+    version_option: --version
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/docker/bin/containerd-shim
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/docker/bin/ctr
+    version_option: --version
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/docker/bin/docker
+    version_option: --version
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/docker/bin/docker-init
+    version_option: --version
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/docker/bin/dockerd
+    version_option: --version
+
+- type: replace
+  path: /instance_groups/name=jumpbox/jobs/name=set-path/properties?/jumpbox/clis/-
+  value:
+    script: /var/vcap/packages/docker/bin/runc
+    version_option: --version
